@@ -2,7 +2,8 @@ version: "3.8"
 
 services:
   app:
-    build: ./app
+    build:
+      context: ./app
     container_name: google_log_app
     ports:
       - "8000:8000"
@@ -17,14 +18,14 @@ services:
     ports:
       - "9090:9090"
 
-grafana:
-  image: grafana/grafana:latest
-  container_name: grafana
-  ports:
-    - "3000:3000"
-  volumes:
-    - ./grafana/dashboards:/var/lib/grafana/dashboards
-    - ./grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
-    - ./grafana/datasources/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
-  depends_on:
-    - prometheus
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+      - ./grafana/datasources/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+    depends_on:
+      - prometheus
